@@ -59,7 +59,7 @@
                         <th>$row[email]</th>
                         <th>$row[phone]</th>
                         <th>$row[address]</th>
-                        <th>$row[create_at]</th>
+                        <th>$row[created_at]</th>
                         <td>
                             <a class='btn btn-primary btn-sm' href='/PHP/edit.php?id=$row[id]'>Editar</a>  
                             <a class='btn btn-danger btn-sm' href='/PHP/delete.php?id=$row[id]'>Eliminar</a>
