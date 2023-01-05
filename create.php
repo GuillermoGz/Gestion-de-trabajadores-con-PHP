@@ -1,4 +1,13 @@
 <?php
+use LDAP\Result;
+$servername = "localhost"; 
+$username = "root";  
+$password = "";      
+$database = "myshop";
+
+$connection = new mysqli($servername, $username, $password, $database);
+
+
 $name = "";
 $email = "";
 $phone = "";
@@ -19,6 +28,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             $errorMessage = "Todos los campos son necesarios";
             break;
         }
+
+        $sql = "INSERT INTO clients (name, email, phone, address)".  #Ingresa los datos ingresados a la tabla
+                "VALUES('$name', '$email', '$phone', '$address')";
+        $result = $connection->query($sql);
+        if(!$result){
+            $errorMessage = "Query invalida: " . $connection->error;  #Mensaje de error
+            break;
+        }
         //agregar a nuevos usuarios a la base de datos
         $name = "";
         $email = "";
@@ -26,6 +43,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $address = "";
 
         $successMessage = "Cliente agregado correctamente";
+        header("location: /PHP/index.php");
+        exit;
     } while (false);
 }
 
@@ -42,6 +61,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     <title>My Shop</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="container my-5">
