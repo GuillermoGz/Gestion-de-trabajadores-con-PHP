@@ -26,18 +26,48 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>10</td>
-                        <td>Felipe vargas</td>
-                        <td>felipe@wom.cl</td>
-                        <td>+56938181</td>
-                        <td>Santiago,USa</td>
-                        <td>18/05/1987</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm" href="/PHP/edit.php">Edit</a>
-                            <a class="btn btn-danger btn-sm" href="/PHP/delete.php">Delete</a>
-                        </td>
-                    </tr>
+                    <?php
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $database = "myshop";
+
+                    //Create connection
+                    $connection = new mysqli($servername,$username,$password,$database);
+
+                    //Check connection
+                    if($connection->connect_error){
+                        die("Connection failed: " . $connection->connection_error);
+                    }
+
+                    // Read all row from database table 
+                    $sql = "SELECT * FROM clients";
+                    $result = $connection->query($sql);
+
+                    if(!$result){
+                        die("Invalid query: " . $connection->error);
+                    }
+
+                    // Read data of each row
+                    while($row = $result->fetch_assoc()){
+                        echo "
+                        <tr>
+                            <td>$row[id]</td>
+                            <td>$row[name]</td>
+                            <td>$row[email]</td>
+                            <td>$row[phone]</td>
+                            <td>$row[address]</td>
+                            <td>$row[created_at]</td>
+                            <td>
+                                <a class='btn btn-primary btn-sm' href='/PHP/edit.php?id=$row[id]'>Edit</a>
+                                <a class='btn btn-danger btn-sm' href='/PHP/delete.php?id=$row[id]'>Delete</a>
+                            </td>
+                        </tr>
+                        ";
+                    }
+                    ?>
+
+                   
                 </tbody>
             </table>
     </div>
